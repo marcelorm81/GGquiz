@@ -95,7 +95,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ question, currentNumber, totalQuest
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-4xl flex flex-col items-center justify-center h-full opacity-0 py-2">
+    <div ref={containerRef} className="w-full max-w-4xl flex flex-col items-center justify-center h-full opacity-0 py-2 mx-auto">
       <div className="question-meta mb-6 md:mb-12 opacity-0 shrink-0">
         <span className="text-white/60 text-[9px] md:text-[10px] tracking-[0.4em] uppercase border-b border-white/20 pb-2">
           No. {currentNumber} of {totalQuestions}

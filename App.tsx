@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { GameState, Question } from './types';
-import { INITIAL_QUESTIONS, POOL_QUESTIONS, BACKGROUND_POOL, INTRO_BG_IMAGE, RESULT_BG_MEDIA } from './constants';
+import { INITIAL_QUESTIONS, POOL_QUESTIONS, BACKGROUND_POOL, INTRO_BG_IMAGE, INTRO_BG_VIDEO, RESULT_BG_MEDIA } from './constants';
 import StartScreen from './components/StartScreen';
 import QuizCard from './components/QuizCard';
 import ResultCard from './components/ResultCard';
@@ -73,7 +73,7 @@ const App: React.FC = () => {
 
   // Determine current background media type and source
   const currentMedia = useMemo(() => {
-    if (gameState === 'start') return { type: 'image', src: INTRO_BG_IMAGE };
+    if (gameState === 'start') return { type: 'video', src: INTRO_BG_VIDEO };
     if (gameState === 'finished') return { type: 'video', src: RESULT_BG_MEDIA };
     
     // Safe check in case activeQuestions isn't ready
