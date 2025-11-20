@@ -68,7 +68,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ score, total, onRestart }) => {
   const scoreString = `${score}/${total}`;
   
   const handleJoinCommunity = () => {
-    window.open('https://www.carolinaherrera.com/', '_blank');
+    window.open('https://www.carolinaherrera.com/es/es/signin', '_blank');
   };
 
   return (

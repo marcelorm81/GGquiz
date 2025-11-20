@@ -40,17 +40,45 @@
       }
       /* Completely disable hover states on mobile/touch devices */
       @media (hover: none) and (pointer: coarse) {
-        /* Disable all hover states on touch devices - no hover effects at all */
-        *:hover,
-        button:hover,
-        .hover-enabled:hover,
+        /* Ensure default option buttons have white text (unless they have text-black or text-red-400) */
+        button.option-btn:not(.text-black):not(.text-red-400) {
+          color: #ffffff !important;
+        }
+        button.option-btn:not(.text-black):not(.text-red-400) > div > span {
+          color: rgba(255, 255, 255, 0.9) !important;
+        }
+        /* Ensure buttons with text-black class (correct answers) show black text */
+        button.option-btn.text-black {
+          color: #000000 !important;
+        }
+        button.option-btn.text-black > div > span {
+          color: #000000 !important;
+        }
+        /* Ensure buttons with bg-white class show solid white background on mobile */
+        button.option-btn.bg-white {
+          background-color: #ffffff !important;
+        }
+        /* Prevent hover from applying any visual changes on touch devices */
+        /* Don't override bg-white buttons on hover */
+        button.option-btn:hover:not(.bg-white),
+        .hover-enabled:hover:not(.bg-white) {
+          /* Reset border and background to their non-hover state - don't touch text color */
+          border-color: rgba(255, 255, 255, 0.3) !important;
+          background-color: transparent !important;
+        }
+        /* For bg-white buttons, preserve white background even on hover */
+        button.option-btn.bg-white:hover {
+          background-color: #ffffff !important;
+        }
+        /* Disable hover text color changes - preserve the base color */
         .hover-enabled-text:hover,
+        button.option-btn:hover span {
+          /* Don't apply any color changes on hover - preserve original class colors */
+        }
+        /* Disable hover background/text changes */
         .hover-enabled-bg:hover {
-          border-color: inherit !important;
-          background-color: inherit !important;
-          color: inherit !important;
-          opacity: inherit !important;
-          transform: inherit !important;
+          background-color: transparent !important;
+          /* Don't change text color on hover */
         }
         /* Use :active for touch feedback instead */
         button:active {
@@ -58,16 +86,23 @@
         }
       }
       /* Additional rule for touch-device class (set by JavaScript) */
-      body.touch-device *:hover,
-      body.touch-device button:hover,
-      body.touch-device .hover-enabled:hover,
-      body.touch-device .hover-enabled-text:hover,
+      /* Ensure bg-white buttons show white background */
+      body.touch-device button.option-btn.bg-white {
+        background-color: #ffffff !important;
+      }
+      body.touch-device button.option-btn:hover:not(.bg-white),
+      body.touch-device .hover-enabled:hover:not(.bg-white) {
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        background-color: transparent !important;
+      }
+      body.touch-device button.option-btn.bg-white:hover {
+        background-color: #ffffff !important;
+      }
+      body.touch-device .hover-enabled-text:hover {
+        /* Keep original text color */
+      }
       body.touch-device .hover-enabled-bg:hover {
-        border-color: inherit !important;
-        background-color: inherit !important;
-        color: inherit !important;
-        opacity: inherit !important;
-        transform: inherit !important;
+        background-color: transparent !important;
       }
       /* Only apply hover effects on devices with hover capability (desktop) */
       @media (hover: hover) and (pointer: fine) {

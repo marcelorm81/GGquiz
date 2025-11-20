@@ -122,7 +122,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ question, currentNumber, totalQuest
           if (hasSubmitted) {
             if (isSelected) {
               if (isOptionCorrect) {
-                // User Selected Correct: Solid White
+                // User Selected Correct: Solid White Button with Black Text
                 btnClasses = 'bg-white border-white text-black';
                 textClasses = 'text-black';
               } else {
@@ -138,7 +138,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ question, currentNumber, totalQuest
               textClasses = 'text-white/10';
             }
           } else if (isSelected) {
-             // Fallback for pre-submission
+             // Fallback for pre-submission - solid white with black text
              btnClasses = 'bg-white border-white text-black';
              textClasses = 'text-black';
           }
