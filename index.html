@@ -38,20 +38,38 @@
       ::-webkit-scrollbar {
         display: none;
       }
-      /* Fix hover states on mobile - prevent sticky hover on touch devices */
+      /* Completely disable hover states on mobile/touch devices */
       @media (hover: none) and (pointer: coarse) {
-        /* On touch devices, prevent hover states from sticking */
-        button:hover {
+        /* Disable all hover states on touch devices - no hover effects at all */
+        *:hover,
+        button:hover,
+        .hover-enabled:hover,
+        .hover-enabled-text:hover,
+        .hover-enabled-bg:hover {
           border-color: inherit !important;
           background-color: inherit !important;
           color: inherit !important;
+          opacity: inherit !important;
+          transform: inherit !important;
         }
         /* Use :active for touch feedback instead */
         button:active {
           opacity: 0.8;
         }
       }
-      /* Only apply hover effects on devices with hover capability */
+      /* Additional rule for touch-device class (set by JavaScript) */
+      body.touch-device *:hover,
+      body.touch-device button:hover,
+      body.touch-device .hover-enabled:hover,
+      body.touch-device .hover-enabled-text:hover,
+      body.touch-device .hover-enabled-bg:hover {
+        border-color: inherit !important;
+        background-color: inherit !important;
+        color: inherit !important;
+        opacity: inherit !important;
+        transform: inherit !important;
+      }
+      /* Only apply hover effects on devices with hover capability (desktop) */
       @media (hover: hover) and (pointer: fine) {
         .hover-enabled:hover {
           border-color: white !important;
@@ -79,25 +97,26 @@
   <body>
     <div id="root"></div>
     <script>
-      // Fix sticky hover states on mobile/touch devices
-      // Remove hover class from elements after touch to prevent sticky hover
+      // Completely disable hover states on mobile/touch devices
       if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        // Add a class to body to identify touch devices
+        document.body.classList.add('touch-device');
+        // Prevent hover states from being triggered on touch
         document.addEventListener('touchstart', function() {}, { passive: true });
-        // Remove hover states after touch events
+        // Clear any hover states after touch
         document.addEventListener('touchend', function(e) {
           const target = e.target;
-          if (target && target.nodeName === 'BUTTON') {
-            // Force a repaint to clear any stuck hover states
-            target.blur();
-            // Use a small timeout to ensure hover state is cleared
-            setTimeout(function() {
-              if (target.matches(':hover')) {
-                target.style.pointerEvents = 'none';
-                setTimeout(function() {
-                  target.style.pointerEvents = '';
-                }, 100);
-              }
-            }, 0);
+          if (target) {
+            // Force blur to clear any hover states
+            if (target.blur) target.blur();
+            // Remove hover pseudo-class by temporarily disabling pointer events
+            if (target.matches && target.matches(':hover')) {
+              const originalPointerEvents = target.style.pointerEvents;
+              target.style.pointerEvents = 'none';
+              setTimeout(function() {
+                target.style.pointerEvents = originalPointerEvents;
+              }, 0);
+            }
           }
         }, { passive: true });
       }
