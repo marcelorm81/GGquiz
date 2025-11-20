@@ -91,12 +91,37 @@ const App: React.FC = () => {
     // Create appropriate element based on media type
     if (currentMedia.type === 'video') {
         const video = document.createElement('video');
-        video.src = currentMedia.src;
+        video.preload = 'auto';
         video.autoplay = true;
         video.loop = true;
         video.muted = true; // Required for autoplay
         video.playsInline = true; // Required for mobile iOS
+        video.controls = false; // Hide video controls
+        video.disablePictureInPicture = true; // Disable picture-in-picture
+        video.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback'); // Prevent controls
         video.className = "absolute top-0 left-0 w-full h-full object-cover grayscale";
+        
+        // Add error handling with fallback to image
+        video.onerror = (e) => {
+            console.error("Video loading error:", e, "URL:", currentMedia.src);
+            // Fallback to image if video fails
+            if (gameState === 'start') {
+                const fallbackDiv = document.createElement('div');
+                fallbackDiv.style.backgroundImage = `url(${INTRO_BG_IMAGE})`;
+                fallbackDiv.className = "absolute top-0 left-0 w-full h-full bg-cover bg-center grayscale";
+                fallbackDiv.style.opacity = "0";
+                fallbackDiv.style.zIndex = "1";
+                container.appendChild(fallbackDiv);
+                window.gsap.to(fallbackDiv, {
+                    opacity: 1,
+                    duration: 2.0,
+                    ease: "power2.inOut"
+                });
+            }
+        };
+        
+        // Load the video source
+        video.src = currentMedia.src;
         newBg = video;
     } else {
         const div = document.createElement('div');
@@ -113,7 +138,25 @@ const App: React.FC = () => {
 
     // Ensure video plays if applicable
     if (newBg instanceof HTMLVideoElement) {
-        newBg.play().catch(e => console.log("Video autoplay prevented:", e));
+        // Wait for video to be ready before playing
+        const playVideo = () => {
+            newBg.play().catch(e => {
+                console.log("Video autoplay prevented:", e);
+                // Try again after a short delay
+                setTimeout(() => {
+                    newBg.play().catch(err => console.log("Video play retry failed:", err));
+                }, 100);
+            });
+        };
+        
+        if (newBg.readyState >= 2) {
+            // Video is already loaded enough to play
+            playVideo();
+        } else {
+            // Wait for video to load
+            newBg.addEventListener('loadeddata', playVideo, { once: true });
+            newBg.addEventListener('canplay', playVideo, { once: true });
+        }
     }
 
     // Animate in

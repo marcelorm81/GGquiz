@@ -5,7 +5,7 @@ import { Question, ResultType } from './types';
 const BASE_IMG_URL = "https://raw.githubusercontent.com/marcelorm81/assets/602a466a47564911ed02ebda0b8d482389db5cb0";
 
 export const INTRO_BG_IMAGE = `${BASE_IMG_URL}/gg.png`;
-export const INTRO_BG_VIDEO = "https://raw.githubusercontent.com/marcelorm81/assets/b7cc3c5f911e4497cd0a1011a9492cb2c1bdcc57/final_1.mp4";
+export const INTRO_BG_VIDEO = "https://raw.githubusercontent.com/marcelorm81/assets/43e3e3161e876d456982b9e8208d32c7512430b1/final_1.mp4";
 export const RESULT_BG_MEDIA = "https://customer-jsjst1fdhj7sipkx.cloudflarestream.com/f1f74a5b179801ced08d45878514477f/thumbnails/thumbnail.mp4?&width=1080&duration=14s";
 
 // Available backgrounds to cycle through for the random pool
