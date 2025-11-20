@@ -103,14 +103,14 @@ const ResultCard: React.FC<ResultCardProps> = ({ score, total, onRestart }) => {
       <div className="flex flex-col md:flex-row gap-4 w-full justify-center items-center">
         <button
           onClick={onRestart}
-          className="action-btn px-10 md:px-12 py-4 md:py-5 border border-white text-white hover:bg-white hover:text-black transition-all duration-700 uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-medium opacity-0 w-full md:w-auto min-w-[220px]"
+          className="action-btn px-10 md:px-12 py-4 md:py-5 border border-white text-white hover-enabled-bg transition-all duration-700 uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-medium opacity-0 w-full md:w-auto min-w-[220px]"
         >
           Try Again
         </button>
         
         <button
           onClick={handleJoinCommunity}
-          className="action-btn px-10 md:px-12 py-4 md:py-5 border border-white text-white hover:bg-white hover:text-black transition-all duration-700 uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-medium opacity-0 w-full md:w-auto min-w-[220px]"
+          className="action-btn px-10 md:px-12 py-4 md:py-5 border border-white text-white hover-enabled-bg transition-all duration-700 uppercase tracking-[0.3em] text-[9px] md:text-[10px] font-medium opacity-0 w-full md:w-auto min-w-[220px]"
         >
           Join Our Community
         </button>

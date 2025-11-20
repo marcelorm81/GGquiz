@@ -116,8 +116,8 @@ const QuizCard: React.FC<QuizCardProps> = ({ question, currentNumber, totalQuest
           const isOptionCorrect = option.isCorrect;
           
           // Dynamic Style Logic for Feedback
-          let btnClasses = 'bg-transparent border-white/30 hover:border-white text-white'; // Default
-          let textClasses = 'text-white/90 group-hover:text-white';
+          let btnClasses = 'bg-transparent border-white/30 hover-enabled text-white'; // Default - hover only on hover-capable devices
+          let textClasses = 'text-white/90 hover-enabled-text';
           
           if (hasSubmitted) {
             if (isSelected) {
